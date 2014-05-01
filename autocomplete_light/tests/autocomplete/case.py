@@ -6,10 +6,7 @@ from django import http
 from django import forms
 from django.test import TestCase
 from django.contrib.contenttypes.models import ContentType
-from six import text_type
-
 from ...example_apps.autocomplete_test_case_app.models import User, Group
-
 import autocomplete_light
 
 
@@ -40,7 +37,7 @@ class AutocompleteTestCase(TestCase):
 
     def assert_choices_equal(self, result, test):
         self.assertEqual(result, test['expected'],
-                'Unexpected result %s\nTest: %s' % (result, test))
+                         'Unexpected result %s\nTest: %s' % (result, test))
 
     def test_choices_for_request(self):
         if not hasattr(self, 'get_choices_for_request_tests'):
@@ -64,8 +61,8 @@ class AutocompleteTestCase(TestCase):
 
     def assert_validate_success(self, result, test):
         self.assertEqual(result, test['expected'],
-            'Got %s for test %s %s' % (result, self.__class__.__name__,
-                test))
+                         'Got %s for test %s %s' % (result, self.__class__.__name__,
+                                                    test))
 
     def test_validate(self):
         if not hasattr(self, 'get_validate_tests'):
@@ -87,8 +84,8 @@ class AutocompleteTestCase(TestCase):
 
     def assert_html_equals(self, result, test):
         self.assertEqual(result, test['expected'],
-            'Got %s for test %s %s' % (result, self.__class__.__name__,
-                test))
+                         'Got %s for test %s %s' % (result, self.__class__.__name__,
+                                                    test))
 
     def test_widget(self):
         form_class = None
@@ -118,7 +115,7 @@ class AutocompleteTestCase(TestCase):
             if valid:
                 data = form.cleaned_data['x']
 
-                self.assertEqual(text_type(data), text_type(test['expected_data']),
-                    'Unexepected data: %s for test %s %s' % (
-                        data, self.__class__.__name__, test)
+                self.assertListEqual(data, test['expected_data'],
+                                     'Unexepected data: %s for test %s %s' % (
+                                         data, self.__class__.__name__, test)
                 )
